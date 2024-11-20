@@ -885,7 +885,7 @@ namespace ImageProcess2
             
 		}
 
-		public static bool EdgeEnhance(Bitmap b, byte nThreshold)
+		public static Bitmap EdgeEnhance(Bitmap b, byte nThreshold)
 		{
 			// This one works by working out the greatest difference between a nPixel and it's eight neighbours.
 			// The threshold allows softer edges to be forced down to black, use 0 to negate it's effect.
@@ -948,7 +948,7 @@ namespace ImageProcess2
 			b.UnlockBits(bmData);
 			b2.UnlockBits(bmData2);
 
-			return true;
+			return b2;
 		}
 		public static Bitmap Resize(Bitmap b, int nWidth, int nHeight, bool bBilinear)
 		{

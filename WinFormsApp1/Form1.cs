@@ -12,7 +12,7 @@ namespace WinFormsApp1
     {
         Bitmap loaded, processed;
         Device[] devices;
-        Bitmap imageA, imageB, colorGreen;
+        Bitmap imageA, imageB, colorGreen, result;
         private IVideoSource _videoSource;
         FilterInfoCollection fic;
 
@@ -32,14 +32,11 @@ namespace WinFormsApp1
 
             foreach (FilterInfo dev in fic)
             {
-                //comboBox1.Items.Add(dev.Name);
                 _currentDevice = dev;
 
 
             }
 
-            //comboBox1.SelectedIndex = 0;
-            //vcd = new VideoCaptureDevice(fic[comboBox1.SelectedIndex].MonikerString);
         }
 
         public FilterInfo CurrentDevice
@@ -67,54 +64,12 @@ namespace WinFormsApp1
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             loaded = new Bitmap(openFileDialog1.FileName);
-            leftPBBasicIP.Image = loaded;
-        }
-
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.ShowDialog();
-        }
-
-        private void pixelCopyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ImageProcess.copyImage(ref loaded, ref processed);
-            rightPBBasicIP.Image = processed;
+            pictureBox1.Image = loaded;
         }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             processed.Save(saveFileDialog1.FileName);
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveFileDialog1.ShowDialog();
-        }
-
-        private void greyscaleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            BasicDIP.greyscale(ref loaded, ref processed);
-            rightPBBasicIP.Image = processed;
-
-        }
-
-        private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BasicDIP.invert(ref loaded, ref processed);
-            rightPBBasicIP.Image = processed;
-        }
-
-        private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BasicDIP.histogram(ref loaded, ref processed);
-            rightPBBasicIP.Image = processed;
-        }
-
-        private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BasicDIP.sepia(ref loaded, ref processed);
-            rightPBBasicIP.Image = processed;
         }
 
 
@@ -125,13 +80,9 @@ namespace WinFormsApp1
 
         private void onToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            rightPBBasicIP.Image = null;
-            //pictureBox2.Image = null;
-            pictureBox3.Image = null;
             StartCamera();
-
-
         }
+
         Bitmap a;
         private void video_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
         {
@@ -139,12 +90,12 @@ namespace WinFormsApp1
             {
                 // Clone the current frame
                 imageB = (Bitmap)eventArgs.Frame.Clone();
-                pictureBox1.Image = imageB;
+
 
                 if (imageA != null)
                 {
                     BasicDIP.subtract(ref imageA, ref imageB, ref processed, 5);
-                    pictureBox3.Image = processed;
+
                 }
             }
             catch (Exception ex)
@@ -153,8 +104,6 @@ namespace WinFormsApp1
             }
 
         }
-
-
 
         private void StartCamera()
         {
@@ -179,10 +128,7 @@ namespace WinFormsApp1
 
         private void offToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            leftPBBasicIP.Image = null;
-            pictureBox1.Image = null;
-            rightPBBasicIP.Image = null;
-            pictureBox3.Image = null;
+
             StopCamera();
         }
 
@@ -197,7 +143,7 @@ namespace WinFormsApp1
         private void openFileDialog3_FileOk(object sender, CancelEventArgs e)
         {
             imageA = new Bitmap(openFileDialog3.FileName);
-            pictureBox2.Image = imageA;
+            pictureBox3.Image = imageA;
         }
 
         private void loadImageBtn_Click(object sender, EventArgs e)
@@ -214,7 +160,6 @@ namespace WinFormsApp1
         {
 
             BasicDIP.subtract(ref imageA, ref imageB, ref processed, 5);
-            pictureBox3.Image = processed;
 
         }
 
@@ -225,279 +170,224 @@ namespace WinFormsApp1
 
         private void gaussianBlurToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                //Bitmap bmp = (Bitmap)loaded.Clone();
-                processed = BitmapFilter.GaussianBlur((Bitmap)leftPBBasicIP.Image, weight);
 
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
 
 
         private void smoothToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                //Bitmap bmp = (Bitmap)loaded.Clone();
-                processed = BitmapFilter.Smooth((Bitmap)leftPBBasicIP.Image, weight);
 
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
 
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            weight = trackBar1.Maximum - trackBar1.Value;
+
         }
 
         private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
-                processed = BitmapFilter.MeanRemoval(bmp, weight);
 
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (loaded != null)
-            {
-                //Bitmap bmp = (Bitmap)loaded.Clone();
-                processed = BitmapFilter.Sharpen(loaded, weight);
 
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void kIRSHToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.EdgeDetectConvolution(bmp, BitmapFilter.EDGE_DETECT_KIRSH, (byte)weight);
-
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void pREWITTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.EdgeDetectConvolution(bmp, BitmapFilter.EDGE_DETECT_PREWITT, (byte)weight);
-
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void sOBELToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.EdgeDetectConvolution(bmp, BitmapFilter.EDGE_DETECT_SOBEL, (byte)weight);
-
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void laplacianToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.EmbossLaplacian(bmp);
-
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void horizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.HorizontalEmboss(bmp);
-
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void verticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.VerticalEmboss(bmp);
-
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void allDirectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.AllDirectionsEmboss(bmp);
-
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void lossyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.LossyEmboss(bmp);
-
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
         }
 
         private void horzVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (leftPBBasicIP.Image != null)
-            {
-                Bitmap bmp = (Bitmap)leftPBBasicIP.Image.Clone();
 
-                processed = BitmapFilter.Horz_Vert_Emboss(bmp);
+        }
 
-                if (processed != null)
-                {
-                    // Display the blurred image in the PictureBox
-                    rightPBBasicIP.Image = processed;
-                    leftPBBasicIP.Image = loaded;
-                }
-                else
-                {
-                    MessageBox.Show("Failed to apply Gaussian Blur.");
-                }
-            }
+        private void openToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+        }
+
+        private void pixelCopyToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ImageProcess.copyImage(ref loaded, ref processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void greyscaleToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            BasicDIP.greyscale(ref loaded, ref processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void inversionToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            BasicDIP.invert(ref loaded, ref processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void histogramToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            BasicDIP.histogram(ref loaded, ref processed);
+            pictureBox2.Image = processed;
+
+        }
+
+        private void sepiaToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            BasicDIP.sepia(ref loaded, ref processed);
+            pictureBox2.Image = processed;
+        }
+
+
+        private void saveToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            saveFileDialog1.ShowDialog();
+        }
+
+        private void sharpenToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.Smooth(loaded, weight);
+            pictureBox2.Image = processed;
+
+        }
+
+        private void blurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.GaussianBlur(loaded, weight);
+            pictureBox2.Image = processed;
+        }
+
+        private void edgeEnhanceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.EdgeEnhance(loaded, (byte)weight);
+            pictureBox2.Image = processed;
+        }
+
+        private void kIRSHToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.EdgeDetectConvolution(loaded, BitmapFilter.EDGE_DETECT_KIRSH, (byte)weight);
+            pictureBox2.Image = processed;
+        }
+
+        private void pREWITTToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.EdgeDetectConvolution(loaded, BitmapFilter.EDGE_DETECT_PREWITT, (byte)weight);
+            pictureBox2.Image = processed;
+        }
+
+        private void sOBELToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.EdgeDetectConvolution(loaded, BitmapFilter.EDGE_DETECT_SOBEL, (byte)weight);
+            pictureBox2.Image = processed;
+        }
+
+        private void meanRemovalToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.MeanRemoval(loaded, (byte)weight);
+            pictureBox2.Image = processed;
+        }
+
+        private void laplascianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.EmbossLaplacian(loaded);
+            pictureBox2.Image = processed;
+        }
+
+        private void horzVerticalToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.HorizontalEmboss(loaded);
+            pictureBox2.Image = processed;
+        }
+
+        private void lossyToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.LossyEmboss(loaded);
+            pictureBox2.Image = processed;
+        }
+
+        private void horizontalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.HorizontalEmboss(loaded);
+            pictureBox2.Image = processed;
+        }
+
+        private void verticalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.VerticalEmboss(loaded);
+            pictureBox2.Image = processed;
+        }
+
+        private void allDirectionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.AllDirectionsEmboss(loaded);
+            pictureBox2.Image = processed;
+        }
+
+        private void smoothToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            processed = BitmapFilter.Smooth(loaded, weight);
+            pictureBox2.Image = processed;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            openFileDialog3.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            openFileDialog4.ShowDialog();
+        }
+
+        private void openFileDialog4_FileOk(object sender, CancelEventArgs e)
+        {
+            imageB = new Bitmap(openFileDialog4.FileName);
+            pictureBox4.Image = imageB;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            BasicDIP.subtract(ref imageB,  ref imageA, ref result, 5);
+            pictureBox5.Image = result;
         }
     }
 }
