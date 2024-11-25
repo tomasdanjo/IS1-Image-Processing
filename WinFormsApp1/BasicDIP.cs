@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 
 namespace WinFormsApp1
 {
@@ -37,6 +38,26 @@ namespace WinFormsApp1
                     int avg = (pix.R + pix.G + pix.B) / 3;
                     Color newpix = Color.FromArgb(avg, avg, avg);
                     ImageB.SetPixel(x, y, newpix);
+                }
+            }
+        }
+
+        public static void contours(ref Bitmap ImageA, ref Bitmap ImageB)
+        {
+            ImageB = new Bitmap(ImageA.Width, ImageA.Height);
+
+            for (int x = 0; x < ImageA.Width; x++)
+            {
+                for (int y = 0; y < ImageA.Height; y++)
+                {
+                    if(ImageA.GetPixel(x,y).R > 200)
+                    {
+                        ImageB.SetPixel(x, y, Color.Red);
+                    }
+                    else
+                    {
+                        ImageB.SetPixel(x,y,Color.Black); 
+                    }
                 }
             }
         }

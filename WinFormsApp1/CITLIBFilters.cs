@@ -39,6 +39,7 @@ namespace ImageProcess2
 		public const short EDGE_DETECT_KIRSH		= 1;
 		public const short EDGE_DETECT_PREWITT		= 2;
 		public const short EDGE_DETECT_SOBEL		= 3;
+		public const short EDGE_DETECT_CANNY		= 4;
 
 		public static bool Invert(Bitmap b)
 		{
@@ -539,6 +540,7 @@ namespace ImageProcess2
 					m.TopLeft = m.MidLeft = m.BottomLeft = 5;
 					m.Offset = 0;
 					break;
+				
 			}
 
 			BitmapFilter.Conv3x3(b, m);

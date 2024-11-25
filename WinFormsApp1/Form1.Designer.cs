@@ -74,7 +74,25 @@
             pictureBox4 = new PictureBox();
             pictureBox3 = new PictureBox();
             tabPage4 = new TabPage();
+            label7 = new Label();
+            label5Cent = new Label();
+            label10Cent = new Label();
+            label25Cent = new Label();
+            label1Peso = new Label();
+            label5Peso = new Label();
+            label6 = new Label();
+            label5 = new Label();
+            label4 = new Label();
+            label3 = new Label();
+            label2 = new Label();
+            label1 = new Label();
+            button7 = new Button();
+            button6 = new Button();
+            button5 = new Button();
+            pictureBox6 = new PictureBox();
             openFileDialog4 = new OpenFileDialog();
+            openFileDialog5 = new OpenFileDialog();
+            labeltotal = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -84,6 +102,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -442,6 +462,23 @@
             // 
             // tabPage4
             // 
+            tabPage4.Controls.Add(labeltotal);
+            tabPage4.Controls.Add(label7);
+            tabPage4.Controls.Add(label5Cent);
+            tabPage4.Controls.Add(label10Cent);
+            tabPage4.Controls.Add(label25Cent);
+            tabPage4.Controls.Add(label1Peso);
+            tabPage4.Controls.Add(label5Peso);
+            tabPage4.Controls.Add(label6);
+            tabPage4.Controls.Add(label5);
+            tabPage4.Controls.Add(label4);
+            tabPage4.Controls.Add(label3);
+            tabPage4.Controls.Add(label2);
+            tabPage4.Controls.Add(label1);
+            tabPage4.Controls.Add(button7);
+            tabPage4.Controls.Add(button6);
+            tabPage4.Controls.Add(button5);
+            tabPage4.Controls.Add(pictureBox6);
             tabPage4.Location = new Point(4, 29);
             tabPage4.Name = "tabPage4";
             tabPage4.Size = new Size(1274, 617);
@@ -449,10 +486,165 @@
             tabPage4.Text = "Coin Count";
             tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(554, 257);
+            label7.Name = "label7";
+            label7.Size = new Size(45, 20);
+            label7.TabIndex = 15;
+            label7.Text = "Total:";
+            // 
+            // label5Cent
+            // 
+            label5Cent.AutoSize = true;
+            label5Cent.Location = new Point(605, 228);
+            label5Cent.Name = "label5Cent";
+            label5Cent.Size = new Size(0, 20);
+            label5Cent.TabIndex = 14;
+            // 
+            // label10Cent
+            // 
+            label10Cent.AutoSize = true;
+            label10Cent.Location = new Point(605, 195);
+            label10Cent.Name = "label10Cent";
+            label10Cent.Size = new Size(0, 20);
+            label10Cent.TabIndex = 13;
+            // 
+            // label25Cent
+            // 
+            label25Cent.AutoSize = true;
+            label25Cent.Location = new Point(605, 163);
+            label25Cent.Name = "label25Cent";
+            label25Cent.Size = new Size(0, 20);
+            label25Cent.TabIndex = 12;
+            // 
+            // label1Peso
+            // 
+            label1Peso.AutoSize = true;
+            label1Peso.Location = new Point(605, 127);
+            label1Peso.Name = "label1Peso";
+            label1Peso.Size = new Size(0, 20);
+            label1Peso.TabIndex = 11;
+            // 
+            // label5Peso
+            // 
+            label5Peso.AutoSize = true;
+            label5Peso.Location = new Point(605, 94);
+            label5Peso.Name = "label5Peso";
+            label5Peso.Size = new Size(0, 20);
+            label5Peso.TabIndex = 10;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(543, 228);
+            label6.Name = "label6";
+            label6.Size = new Size(56, 20);
+            label6.TabIndex = 9;
+            label6.Text = "5-Cent:";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(535, 195);
+            label5.Name = "label5";
+            label5.Size = new Size(64, 20);
+            label5.TabIndex = 8;
+            label5.Text = "10-Cent:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(535, 163);
+            label4.Name = "label4";
+            label4.Size = new Size(64, 20);
+            label4.TabIndex = 7;
+            label4.Text = "25-Cent:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(543, 127);
+            label3.Name = "label3";
+            label3.Size = new Size(56, 20);
+            label3.TabIndex = 6;
+            label3.Text = "1-Peso:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(543, 94);
+            label2.Name = "label2";
+            label2.Size = new Size(56, 20);
+            label2.TabIndex = 5;
+            label2.Text = "5-Peso:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(0, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(50, 20);
+            label1.TabIndex = 4;
+            label1.Text = "label1";
+            // 
+            // button7
+            // 
+            button7.Location = new Point(543, 565);
+            button7.Name = "button7";
+            button7.Size = new Size(189, 29);
+            button7.TabIndex = 3;
+            button7.Text = "Count Coins";
+            button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(543, 495);
+            button6.Name = "button6";
+            button6.Size = new Size(189, 29);
+            button6.TabIndex = 2;
+            button6.Text = "Apply Contours";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(93, 26);
+            button5.Name = "button5";
+            button5.Size = new Size(417, 29);
+            button5.TabIndex = 1;
+            button5.Text = "Load Image";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Location = new Point(93, 60);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(417, 534);
+            pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox6.TabIndex = 0;
+            pictureBox6.TabStop = false;
+            // 
             // openFileDialog4
             // 
             openFileDialog4.FileName = "openFileDialog4";
             openFileDialog4.FileOk += openFileDialog4_FileOk;
+            // 
+            // openFileDialog5
+            // 
+            openFileDialog5.FileName = "openFileDialog5";
+            openFileDialog5.FileOk += openFileDialog5_FileOk;
+            // 
+            // labeltotal
+            // 
+            labeltotal.AutoSize = true;
+            labeltotal.Location = new Point(605, 257);
+            labeltotal.Name = "labeltotal";
+            labeltotal.Size = new Size(0, 20);
+            labeltotal.TabIndex = 16;
             // 
             // Form1
             // 
@@ -477,6 +669,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            tabPage4.ResumeLayout(false);
+            tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -530,5 +725,23 @@
         private Button button2;
         private Button button1;
         private OpenFileDialog openFileDialog4;
+        private Button button5;
+        private PictureBox pictureBox6;
+        private OpenFileDialog openFileDialog5;
+        private Button button6;
+        private Button button7;
+        private Label label5;
+        private Label label4;
+        private Label label3;
+        private Label label2;
+        private Label label1;
+        private Label label6;
+        private Label label5Cent;
+        private Label label10Cent;
+        private Label label25Cent;
+        private Label label1Peso;
+        private Label label5Peso;
+        private Label label7;
+        private Label labeltotal;
     }
 }

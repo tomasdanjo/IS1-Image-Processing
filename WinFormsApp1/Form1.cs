@@ -5,6 +5,12 @@ using AForge.Video.DirectShow;
 using System.Diagnostics;
 using HNUDIP;
 using ImageProcess2;
+using OpenCvSharp;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
 
 namespace WinFormsApp1
 {
@@ -15,6 +21,8 @@ namespace WinFormsApp1
         Bitmap imageA, imageB, colorGreen, result;
         private IVideoSource _videoSource;
         FilterInfoCollection fic;
+        Bitmap coinpic, coinresult;
+
 
         private FilterInfo _currentDevice;
 
@@ -386,8 +394,180 @@ namespace WinFormsApp1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            BasicDIP.subtract(ref imageB,  ref imageA, ref result, 5);
+            BasicDIP.subtract(ref imageB, ref imageA, ref result, 5);
             pictureBox5.Image = result;
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            openFileDialog5.ShowDialog();
+        }
+
+        private void openFileDialog5_FileOk(object sender, CancelEventArgs e)
+        {
+            coinpic = new Bitmap(openFileDialog5.FileName);
+
+            pictureBox6.Image = coinpic;
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            //
+            //gausian blur
+            //edge enhance
+            //meanRemoval
+            //edge detect sobel
+            //draw contours
+            //coinresult = coinpic;
+            coinresult = BitmapFilter.Sharpen(coinpic, 10);
+            coinresult = BitmapFilter.GaussianBlur(coinpic, 10);
+            coinresult = BitmapFilter.EdgeEnhance(coinpic, 15);
+            coinresult = BitmapFilter.MeanRemoval(coinpic, 15);
+            coinresult = BitmapFilter.EdgeDetectConvolution(coinpic, BitmapFilter.EDGE_DETECT_SOBEL, 10);
+
+            BasicDIP.contours(ref coinpic, ref coinresult);
+            pictureBox6.Image = coinresult;
+
+
+
+
+
+
+
+        }
+
+        private Dictionary<string, int> CountAndClassifyCoins(Bitmap binaryImage)
+        {
+            // Result: Dictionary to hold coin classifications
+            Dictionary<string, int> coinCounts = new Dictionary<string, int>
+    {
+        { "5-cent", 0 },
+        { "10-cent", 0 },
+        { "25-cent", 0 },
+        {"1-peso",0 },
+        {"5-peso",0 }
+    };
+
+            bool[,] visited = new bool[binaryImage.Width, binaryImage.Height];
+            int numcoins = 0;
+            List<int> numbers = new List<int>();
+
+            // Loop through the image to find contours
+            for (int y = 0; y < binaryImage.Height; y++)
+            {
+                for (int x = 0; x < binaryImage.Width; x++)
+                {
+                    // If the pixel is white (part of a coin) and not visited
+                    if (binaryImage.GetPixel(x, y).R == 255 && !visited[x, y])
+                    {
+                        // Measure the area of the contour using flood-fill
+                        int contourArea = MeasureContourArea(binaryImage, x, y, visited);
+
+                        // Classify based on area thresholds
+                        if (contourArea > 450)
+                        {
+                            coinCounts["5-peso"]++;
+                        }
+                        else if (contourArea > 335)
+                        {
+                            coinCounts["1-peso"]++;
+                        }
+                        else if (contourArea > 260)
+                        {
+                            coinCounts["25-cent"]++;
+                        }
+                        else if (contourArea > 225)
+                        {
+                            coinCounts["10-cent"]++;
+                        }
+                        else if (contourArea > 200)
+                        {
+                            coinCounts["5-cent"]++;
+                        }
+
+                        //if (contourArea < 500) // Example threshold
+                        //    //coinCounts["Small"]++;
+                        //    Debug.wri
+                        //else if (contourArea < 1500) // Example threshold
+                        //    //coinCounts["Medium"]++;
+                        //else
+                        //    //coinCounts["Large"]++;
+
+                    }
+                }
+            }
+
+            //Debug.WriteLine(string.Join(", ", numbers));
+
+
+            return coinCounts;
+        }
+
+        private int MeasureContourArea(Bitmap image, int startX, int startY, bool[,] visited)
+        {
+            int width = image.Width;
+            int height = image.Height;
+
+            Stack<System.Drawing.Point> stack = new Stack<System.Drawing.Point>();
+            stack.Push(new System.Drawing.Point(startX, startY));
+
+            int area = 0;
+
+            while (stack.Count > 0)
+            {
+                System.Drawing.Point p = stack.Pop();
+                int x = p.X;
+                int y = p.Y;
+
+                // Check bounds and if pixel is already visited
+                if (x < 0 || x >= width || y < 0 || y >= height || visited[x, y])
+                    continue;
+
+                // Check if the pixel is part of a coin
+                if (image.GetPixel(x, y).R == 255)
+                {
+                    visited[x, y] = true;
+                    area++; // Increment area count
+
+                    // Push neighboring pixels
+                    stack.Push(new System.Drawing.Point(x + 1, y));
+                    stack.Push(new System.Drawing.Point(x - 1, y));
+                    stack.Push(new System.Drawing.Point(x, y + 1));
+                    stack.Push(new System.Drawing.Point(x, y - 1));
+                }
+            }
+
+            return area;
+        }
+
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            //System.Diagnostics.Debug.WriteLine("Clicked");
+
+            Dictionary<string, int> coinCounts = CountAndClassifyCoins(coinresult);
+            int peso = 0, cent = 0;
+            peso += coinCounts["5-peso"] * 5;
+            peso += coinCounts["1-peso"];
+
+            cent += coinCounts["25-cent"] * 25;
+            cent += coinCounts["10-cent"] * 10;
+            cent += coinCounts["5-cent"] * 5;
+            peso += cent / 100;
+            cent %= 100;
+            Debug.WriteLine("Peso: " + peso);
+            Debug.WriteLine("Cent: " + cent);
+            label5Peso.Text = coinCounts["5-peso"].ToString();
+            label1Peso.Text = coinCounts["1-peso"].ToString();
+            label25Cent.Text = coinCounts["25-cent"].ToString();
+            label10Cent.Text = coinCounts["10-cent"].ToString();
+            label5Cent.Text = coinCounts["5-cent"].ToString();
+            labeltotal.Text = "P" + peso + "." + cent;
+
+
+
+        }
+
     }
 }
