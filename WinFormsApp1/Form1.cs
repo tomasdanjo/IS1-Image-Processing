@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using Backprop;
 
 namespace WinFormsApp1
 {
@@ -22,6 +23,7 @@ namespace WinFormsApp1
         private IVideoSource _videoSource;
         FilterInfoCollection fic;
         Bitmap coinpic, coinresult;
+        NeuralNet nn;
 
 
         private FilterInfo _currentDevice;
@@ -569,5 +571,60 @@ namespace WinFormsApp1
 
         }
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            nn = new NeuralNet(4, Convert.ToInt16(hntextbox.Text), 1);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            int epochs = Convert.ToInt16(epochtextbox.Text);
+            for (int i = 0; i < epochs; i++)
+            {
+
+                // Total number of inputs (4 in this case)
+                int numberOfInputs = 4;
+
+                // Calculate total combinations (2^numberOfInputs)
+                int totalCombinations = (int)Math.Pow(2, numberOfInputs);
+
+                for (int c = 0; c < totalCombinations; c++)
+                {
+                    double[] inputs = new double[numberOfInputs];
+                    for (int m = 0; m < numberOfInputs; m++)
+                    {
+                        inputs[m] = (c & (1 << m)) != 0 ? 1.0 : 0.0;
+                    }
+
+                    for (int k = 0; k < numberOfInputs; k++)
+                    {
+                        nn.setInputs(k, inputs[k]);
+                    }
+                    double desiredOutput = 1.0;
+                    foreach (var input in inputs)
+                    {
+                        desiredOutput *= input; // AND operation: only 1.0 if all inputs are 1.0
+                    }
+
+                    nn.setDesiredOutput(0, desiredOutput);
+                    nn.learn();
+
+                }
+
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            nn.setInputs(0, Convert.ToDouble(intextbox1.Text));
+            nn.setInputs(1, Convert.ToDouble(intextbox2.Text));
+            nn.setInputs(2, Convert.ToDouble(intextbox3.Text));
+            nn.setInputs(3, Convert.ToDouble(intextbox4.Text));
+            nn.run();
+            ontextbox1.Text = "" + nn.getOuputData(0);
+        }
+
+
     }
 }
+

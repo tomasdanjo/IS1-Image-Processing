@@ -74,6 +74,7 @@
             pictureBox4 = new PictureBox();
             pictureBox3 = new PictureBox();
             tabPage4 = new TabPage();
+            labeltotal = new Label();
             label7 = new Label();
             label5Cent = new Label();
             label10Cent = new Label();
@@ -90,9 +91,25 @@
             button6 = new Button();
             button5 = new Button();
             pictureBox6 = new PictureBox();
+            tabPage3 = new TabPage();
+            label12 = new Label();
+            ontextbox1 = new TextBox();
+            button10 = new Button();
+            button9 = new Button();
+            button8 = new Button();
+            epochtextbox = new TextBox();
+            hntextbox = new TextBox();
+            label11 = new Label();
+            label10 = new Label();
+            intextbox2 = new TextBox();
+            intextbox3 = new TextBox();
+            intextbox4 = new TextBox();
+            intextbox1 = new TextBox();
+            label9 = new Label();
+            label8 = new Label();
             openFileDialog4 = new OpenFileDialog();
             openFileDialog5 = new OpenFileDialog();
-            labeltotal = new Label();
+            label13 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -104,6 +121,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            tabPage3.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -148,6 +166,7 @@
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPage4);
+            tabControl1.Controls.Add(tabPage3);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -486,6 +505,14 @@
             tabPage4.Text = "Coin Count";
             tabPage4.UseVisualStyleBackColor = true;
             // 
+            // labeltotal
+            // 
+            labeltotal.AutoSize = true;
+            labeltotal.Location = new Point(605, 257);
+            labeltotal.Name = "labeltotal";
+            labeltotal.Size = new Size(0, 20);
+            labeltotal.TabIndex = 16;
+            // 
             // label7
             // 
             label7.AutoSize = true;
@@ -628,6 +655,155 @@
             pictureBox6.TabIndex = 0;
             pictureBox6.TabStop = false;
             // 
+            // tabPage3
+            // 
+            tabPage3.Controls.Add(label13);
+            tabPage3.Controls.Add(label12);
+            tabPage3.Controls.Add(ontextbox1);
+            tabPage3.Controls.Add(button10);
+            tabPage3.Controls.Add(button9);
+            tabPage3.Controls.Add(button8);
+            tabPage3.Controls.Add(epochtextbox);
+            tabPage3.Controls.Add(hntextbox);
+            tabPage3.Controls.Add(label11);
+            tabPage3.Controls.Add(label10);
+            tabPage3.Controls.Add(intextbox2);
+            tabPage3.Controls.Add(intextbox3);
+            tabPage3.Controls.Add(intextbox4);
+            tabPage3.Controls.Add(intextbox1);
+            tabPage3.Controls.Add(label9);
+            tabPage3.Controls.Add(label8);
+            tabPage3.Location = new Point(4, 29);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Size = new Size(1274, 617);
+            tabPage3.TabIndex = 4;
+            tabPage3.Text = "Neural Network";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(75, 122);
+            label12.Name = "label12";
+            label12.Size = new Size(257, 20);
+            label12.TabIndex = 15;
+            label12.Text = "Optimal number of hidden neurons: 1";
+            // 
+            // ontextbox1
+            // 
+            ontextbox1.Location = new Point(931, 65);
+            ontextbox1.Name = "ontextbox1";
+            ontextbox1.Size = new Size(88, 27);
+            ontextbox1.TabIndex = 14;
+            // 
+            // button10
+            // 
+            button10.Location = new Point(786, 276);
+            button10.Name = "button10";
+            button10.Size = new Size(233, 29);
+            button10.TabIndex = 13;
+            button10.Text = "Predict";
+            button10.UseVisualStyleBackColor = true;
+            button10.Click += button10_Click;
+            // 
+            // button9
+            // 
+            button9.Location = new Point(490, 65);
+            button9.Name = "button9";
+            button9.Size = new Size(233, 27);
+            button9.TabIndex = 11;
+            button9.Text = "Train Neural Network";
+            button9.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
+            // 
+            // button8
+            // 
+            button8.Location = new Point(75, 65);
+            button8.Name = "button8";
+            button8.Size = new Size(307, 27);
+            button8.TabIndex = 10;
+            button8.Text = "Initialize Neural Network";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
+            // 
+            // epochtextbox
+            // 
+            epochtextbox.Location = new Point(628, 32);
+            epochtextbox.Name = "epochtextbox";
+            epochtextbox.Size = new Size(95, 27);
+            epochtextbox.TabIndex = 9;
+            // 
+            // hntextbox
+            // 
+            hntextbox.Location = new Point(287, 32);
+            hntextbox.Name = "hntextbox";
+            hntextbox.Size = new Size(95, 27);
+            hntextbox.TabIndex = 8;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(490, 39);
+            label11.Name = "label11";
+            label11.Size = new Size(132, 20);
+            label11.TabIndex = 7;
+            label11.Text = "Number of Epochs";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(75, 39);
+            label10.Name = "label10";
+            label10.Size = new Size(193, 20);
+            label10.TabIndex = 6;
+            label10.Text = "Number of Hidden Neurons";
+            // 
+            // intextbox2
+            // 
+            intextbox2.Location = new Point(786, 115);
+            intextbox2.Name = "intextbox2";
+            intextbox2.Size = new Size(88, 27);
+            intextbox2.TabIndex = 5;
+            // 
+            // intextbox3
+            // 
+            intextbox3.Location = new Point(786, 171);
+            intextbox3.Name = "intextbox3";
+            intextbox3.Size = new Size(88, 27);
+            intextbox3.TabIndex = 4;
+            // 
+            // intextbox4
+            // 
+            intextbox4.Location = new Point(786, 221);
+            intextbox4.Name = "intextbox4";
+            intextbox4.Size = new Size(88, 27);
+            intextbox4.TabIndex = 3;
+            // 
+            // intextbox1
+            // 
+            intextbox1.Location = new Point(786, 65);
+            intextbox1.Name = "intextbox1";
+            intextbox1.Size = new Size(88, 27);
+            intextbox1.TabIndex = 2;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(931, 39);
+            label9.Name = "label9";
+            label9.Size = new Size(55, 20);
+            label9.TabIndex = 1;
+            label9.Text = "Output";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(786, 39);
+            label8.Name = "label8";
+            label8.Size = new Size(43, 20);
+            label8.TabIndex = 0;
+            label8.Text = "Input";
+            // 
             // openFileDialog4
             // 
             openFileDialog4.FileName = "openFileDialog4";
@@ -638,13 +814,14 @@
             openFileDialog5.FileName = "openFileDialog5";
             openFileDialog5.FileOk += openFileDialog5_FileOk;
             // 
-            // labeltotal
+            // label13
             // 
-            labeltotal.AutoSize = true;
-            labeltotal.Location = new Point(605, 257);
-            labeltotal.Name = "labeltotal";
-            labeltotal.Size = new Size(0, 20);
-            labeltotal.TabIndex = 16;
+            label13.AutoSize = true;
+            label13.Location = new Point(490, 122);
+            label13.Name = "label13";
+            label13.Size = new Size(226, 20);
+            label13.TabIndex = 16;
+            label13.Text = "Optimal number of epochs: 5120";
             // 
             // Form1
             // 
@@ -672,6 +849,8 @@
             tabPage4.ResumeLayout(false);
             tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            tabPage3.ResumeLayout(false);
+            tabPage3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -743,5 +922,22 @@
         private Label label5Peso;
         private Label label7;
         private Label labeltotal;
+        private TabPage tabPage3;
+        private Label label9;
+        private Label label8;
+        private Label label10;
+        private TextBox intextbox2;
+        private TextBox intextbox3;
+        private TextBox intextbox4;
+        private TextBox intextbox1;
+        private Button button9;
+        private Button button8;
+        private TextBox epochtextbox;
+        private TextBox hntextbox;
+        private Label label11;
+        private TextBox ontextbox1;
+        private Button button10;
+        private Label label12;
+        private Label label13;
     }
 }
